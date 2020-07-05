@@ -350,6 +350,56 @@ NUKE:
 	Inherits@POWERMULTIPLIER: ^PowerMultiplier			##########
 	AcceptsDeliveredExperience:							##########
 		ValidTypes: building							##########
+	Cargo@evolution:
+		Types: evolution
+		MaxWeight: 4
+		PipCount: 4
+		PassengerConditions:
+			e1: evolve-rmbo
+			e3: evolve-tanya
+	KillsSelf@rmbo:
+		RequiresCondition: evolve-rmbo >= 4
+		GrantsCondition: evolution
+		DamageTypes: None
+	KillsSelf@tanya:
+		RequiresCondition: evolve-tanya >= 4
+		GrantsCondition: evolution
+		DamageTypes: None
+	WithDeathAnimation:
+		RequiresCondition: !evolution
+	Explodes:
+		RequiresCondition: !evolution
+	Voiced:
+		VoiceSet: EvolutionVoice
+	-ActorLostNotification:
+	DeathSounds@LOST:                ## This is overwritten by the following DeathSounds entry
+		Voice: BuildingLost            ## Maybe it can be hacked with a dummy unit with building lost sound
+		RequiresCondition: !evolution  ## Would be better because DeathSound is also heard by enemies...
+	DeathSounds@NORMAL:
+		Voice: Die
+		RequiresCondition: !evolution
+	SoundOnDamageTransition:
+		DamagedSounds: xplos.aud
+		-DestroyedSounds: crumble.aud
+	-ShakeOnDeath:                   ## we cannot fix this, because it cannot be activated with conditions
+	SpawnActorOnDeath@rmbo:
+		RequiresCondition: evolve-rmbo >= 4
+		Actor: nuke.evolution.rmbo
+	SpawnActorOnDeath@tanya:
+		RequiresCondition: evolve-tanya >= 4
+		Actor: nuke.evolution.tanya
+
+NUKE.evolution.rmbo:
+	Inherits: NUKE
+	Cargo@evolution:
+		InitialUnits: rmbo
+	-Buildable:
+
+NUKE.evolution.tanya:
+	Inherits: NUKE
+	Cargo@evolution:
+		InitialUnits: E7
+	-Buildable:
 
 NUK2:
 	Inherits: ^BaseBuilding
@@ -5979,7 +6029,7 @@ CITYPARK:
 	-SpawnActorsOnSell:
 	SeedsResource:
 		Interval: 27	#55
-		ResourceType: Tiberium	
+		ResourceType: Tiberium
 		MaxRange: 2
 
 CITYFOUNTAIN:
@@ -6008,7 +6058,7 @@ CITYFOUNTAIN:
 	-SpawnActorsOnSell:
 	SeedsResource:
 		Interval: 55	#110
-		ResourceType: BlueTiberium	
+		ResourceType: BlueTiberium
 		MaxRange: 2
 
 CITYBOTR:

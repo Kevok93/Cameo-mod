@@ -27,14 +27,14 @@ fact:
 	idle-overlay: customoverlay
 
 nuke:
-	idle:
+	idle: nuke
 		Length: 4
 		Tick: 1000
 	damaged-idle:
 		Start: 4
 		Length: 4
 		Tick: 1000
-	dead:
+	dead: nuke
 		Start: 8
 		Tick: 800
 	make: nukemake
@@ -45,6 +45,12 @@ nuke:
 		Length: *
 	icon: nukeicnh.tem
 		AddExtension: False
+
+nuke.evolution.rmbo:
+	Inherits: nuke
+
+nuke.evolution.tanya:
+	Inherits: nuke
 
 proc:
 	idle:
@@ -1849,7 +1855,7 @@ citypd:
 		Start: 0
 	make:
 		Start: 0
-	hq: 
+	hq:
 		Start: 1
 		Length: 2
 		Tick: 400
@@ -1878,7 +1884,7 @@ citycoal:
 		Length: 8
 		Tick: 200
 	dead:
-	make: 
+	make:
 		Length: 1
 		Tick: 80
 	icon: citycoalicon.shp
@@ -1892,7 +1898,7 @@ citynuke:
 		Length: 6
 		Tick: 200
 	dead:
-	make: 
+	make:
 		Length: 1
 		Tick: 80
 	icon: citynukeicon.shp

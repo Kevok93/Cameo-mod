@@ -2,7 +2,7 @@ GenericVoice:
 	Variants:
 		nod: .v01,.v03
 		gdi: .v01,.v03
-		alpha: .v01,.v03	##########		
+		alpha: .v01,.v03	##########
 	Voices:
 		Select: await1,ready,report1,yessir1
 		Action: ackno,affirm1,noprob,ritaway,roger,ugotit
@@ -693,3 +693,8 @@ TripodVoices:
 		Die: TripodDie1,TripodDie2,TripodDie3
 		Burned: Move1
 		Zapped: Move1
+
+EvolutionVoice:
+	Voices:
+		Die: crumble
+		BuildingLost: strclost
