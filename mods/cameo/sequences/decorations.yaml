@@ -6,6 +6,7 @@ split2:
 			DESERT: TEMPERAT
 			RA_DESERT: TEMPERAT
 			CAMEO: TEMPERAT
+    
 	make:
 		Length: 30
 	active:
@@ -13,6 +14,11 @@ split2:
 		Length: 24
 	idle:
 		Start: 54
+    dead:
+        Start: 54
+    icon: split-icon.shp
+		AddExtension: false
+        Offset: 0,0
 
 split3:
 	Defaults:
@@ -51,35 +57,90 @@ splitgold:
 		Length: 24
 	idle:
 		Start: 54
+        
+anthill:
+	idle: anthill.shp
+		AddExtension: false
+    make: anthill.shp
+		AddExtension: false
+    dead: anthill.shp
+		AddExtension: false
+    build: anthill.shp
+		AddExtension: false
+    icon: hillicon.shp
+		AddExtension: false
 
 rock1:
 	idle: rock1.des
+		AddExtension: false
+    make: rock1.des
+		AddExtension: false
+    icon: rock1.des
+		AddExtension: false
+    dead: rock1.des
 		AddExtension: false
 
 rock2:
 	idle: rock2.des
 		AddExtension: false
+    make: rock2.des
+		AddExtension: false
+    dead: rock2.des
+		AddExtension: false
+    icon: rock2.des
+		AddExtension: false
 
 rock3:
 	idle: rock3.des
 		AddExtension: false
+    make: rock3.des
+		AddExtension: false
+    dead: rock3.des
+		AddExtension: false
+    icon: scav-icon.shp
+		AddExtension: false
+        Offset: 0,0
 
 rock4:
 	idle: rock4.des
+		AddExtension: false
+    make: rock4.des
+		AddExtension: false
+    dead: rock4.des
+		AddExtension: false
+    icon: rock4.des
+		AddExtension: false
+    bib: rock4.des
 		AddExtension: false
 
 rock5:
 	idle: rock5.des
 		AddExtension: false
-
+    make: rock5.des
+		AddExtension: false
+    dead: rock5.des
+		AddExtension: false
+    icon: rock5.des
+		AddExtension: false
 rock6:
 	idle: rock6.des
 		AddExtension: false
-
+    make: rock6.des
+		AddExtension: false
+    dead: rock6.des
+		AddExtension: false
+    icon: rock6.des
+		AddExtension: false
 rock7:
 	idle: rock7.des
 		AddExtension: false
-
+    make: rock7.des
+		AddExtension: false
+    dead: rock7.des
+		AddExtension: false
+    icon: rock7.des
+		AddExtension: false
+        
 tc04:
 	Defaults:
 		UseTilesetExtension: true
@@ -1106,6 +1167,16 @@ v34.husk:
 	idle: v34.des
 		Start: 2
 		AddExtension: false
+    make: v34.des
+		Start: 2
+        AddExtension: false
+    dead: v34.des
+		Start: 2
+        AddExtension: false
+    icon: aanest.shp
+		AddExtension: false
+        Offset: 0,0
+
 
 v35:
 	Defaults:
@@ -2325,35 +2396,13 @@ actmountain03:
 		Length: 8
 		Tick: 160
 
-
-harbush:
+harbarn01:
 	idle:
 
-harstump:
-	idle:
-
-harstone:
-	idle:
-
-harboulder:
-	idle:
-
-harfence:
-	idle:
-		Start: 0
-	damaged-idle:
-		Start: 1
-
-harsign:
-	idle:
-
-harlogbin:
+harbarn02:
 	idle:
 
 harstable:
-	idle:
-
-hartree:
 	idle:
 
 harbarn:
@@ -2362,22 +2411,10 @@ harbarn:
 harsilo:
 	idle:
 
-harchickencoop:
-	idle:
-
-harwell:
+harcoop:
 	idle:
 
 harshed:
-	idle:
-
-harbarn01:
-	idle:
-
-harbarn02:
-	idle:
-
-harcoop:
 	idle:
 
 ze3flower01:

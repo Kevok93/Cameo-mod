@@ -1,0 +1,773 @@
+FACT.MUT:
+	Inherits: ^BaseBuilding
+	Inherits@shape: ^3x4Shape
+	Inherits@CPQ: ^CPQCondition
+	Selectable:
+		Bounds: 72,48
+	Valued:
+		Cost: 3500
+	Tooltip:
+		Name: Construction Yard (Mutants)
+	Building:
+		Footprint: xxxx xxxx xxxx
+		Dimensions: 3,4
+		LocalCenterOffset: 0,-512,0
+	Health:
+		HP: 210000
+	Armor:
+		Type: None
+	RevealsShroud:
+		Range: 10c0
+	Production@NORMAL:
+		Produces: Building.Mutants, Defence.Mutants
+		RequiresCondition: !classicproductionqueues
+	Production@CLASSICPRODUCTIONQUEUES:
+		Produces: RABuilding.Mutants, RADefence.Mutants
+		RequiresCondition: classicproductionqueues
+	Transforms:
+		RequiresCondition: factundeploy
+		PauseOnCondition: being-demolished || build-incomplete
+		IntoActor: mcv.mut
+		Offset: 1,1
+		Facing: 108
+	TransformsIntoMobile:
+		RequiresCondition: factundeploy
+		Locomotor: heavywheeled
+		RequiresForceMove: true
+	TransformsIntoPassenger:
+		RequiresCondition: factundeploy
+		CargoType: Vehicle
+		RequiresForceMove: true
+	TransformsIntoRepairable:
+		RequiresCondition: factundeploy
+		RepairActors: fix,rafix,2100rr,scshieldbattery,ra2nadept,ra2gadept,c1fix,c2fix,c1rafix,c2rafix,c12100rr,c22100rr,cscshieldbattery,cra2nadept,cra2gadept	##########
+		RequiresForceMove: true
+	GrantConditionOnPrerequisite@GLOBALFACTUNDEPLOY:
+		Condition: factundeploy
+		Prerequisites: global-factundeploy
+	ProductionQueue@MutantsBuilding:
+		Type: Building.Mutants
+		DisplayOrder: 0
+		Group: Building
+		LowPowerModifier: 200
+		ReadyAudio: ConstructionComplete
+		BlockedAudio: NoBuild
+		LimitedAudio: BuildingInProgress
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	ProductionQueue@MutantsDefense:
+		Type: Defence.Mutants
+		DisplayOrder: 1
+		Group: Defence
+		LowPowerModifier: 300
+		ReadyAudio: ConstructionComplete
+		BlockedAudio: NoBuild
+		LimitedAudio: BuildingInProgress
+		QueuedAudio: Building
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	BaseBuilding:
+	ProductionBar@BuildingMutants:
+		ProductionType: Building.Mutants
+		RequiresCondition: !classicproductionqueues
+	ProductionBar@DefenceMutants:
+		ProductionType: Defence.Mutants
+		RequiresCondition: !classicproductionqueues
+	ProductionBar@RABuildingMutants:
+		ProductionType: RABuilding.Mutants
+		RequiresCondition: classicproductionqueues
+	ProductionBar@RADefenceMutants:
+		ProductionType: RADefence.Mutants
+		RequiresCondition: classicproductionqueues
+	BaseProvider:
+		Cooldown: 75
+		Range: 14c0
+	WithBuildingPlacedAnimation:
+		RequiresCondition: !build-incomplete
+	Power:
+		Amount: 0
+	ProvidesPrerequisite@buildingname:
+		Prerequisite: fact
+	Buildable:
+		Queue: Building.Mutants, RABuilding.Mutants
+		BuildPaletteOrder: 1000
+		Prerequisites: ~disabled
+		Description: Builds structures
+	ProvidesPrerequisite@factiongdi:
+		Prerequisite: mmmutants
+	RenderSprites:
+		Image: anthill
+
+TIBTREEMUT:
+	Inherits: ^BaseBuilding
+	Inherits@shape: ^1x1Shape
+	Selectable:
+		Bounds: 24,24
+	Valued:
+		Cost: 500
+	Tooltip:
+		Name: Tiberium Tree
+	Buildable:
+		BuildPaletteOrder: 10
+		Queue: Building.Mutants, RABuilding.Mutants
+		Description: Seeds Green Tiberium & Provides Power.\n Limit: 20
+		BuildLimit: 20
+	Building:
+		Footprint: x
+		Dimensions: 1,1
+		BuildSounds: citybuild.aud
+	Health:
+		HP: 30000
+	RevealsShroud:
+		Range: 5c0
+    RenderSprites:
+        Image: split2
+	-SpawnActorsOnSell:
+    Power:
+		Amount: 20
+	SeedsResource:
+		Interval: 50
+		ResourceType: Tiberium	
+		MaxRange: 2
+
+TIBTREEMUTB:
+	Inherits: ^BaseBuilding
+	Inherits@shape: ^1x1Shape
+	Selectable:
+		Bounds: 24,24
+	Valued:
+		Cost: 850
+	Tooltip:
+		Name: Tiberium Tree (Blue)
+	Buildable:
+		BuildPaletteOrder: 20
+		Queue: Building.Mutants, RABuilding.Mutants
+		Description: Seeds Blue Tiberium & Provides Power.\n Limit: 10
+        Prerequisites: insecthill
+		BuildLimit: 10
+	Building:
+		Footprint: x
+		Dimensions: 1,1
+		BuildSounds: citybuild.aud
+	Health:
+		HP: 30000
+	RevealsShroud:
+		Range: 5c0
+    RenderSprites:
+        Image: split2
+	-SpawnActorsOnSell:
+    Power:
+		Amount: 40
+	SeedsResource:
+		Interval: 100
+		ResourceType: BlueTiberium	
+		MaxRange: 2
+
+MCV.MUT:
+	Inherits: ^Vehicle
+	Inherits@SELECTION_MODE: ^LowPrioritySelectionMode
+	Valued:
+		Cost: 3500
+	Tooltip:
+		Name: Queen Ant
+	Buildable:
+		BuildPaletteOrder: 100
+		Prerequisites: anyhq, ~techlevel.medium, fix
+		Queue: Vehicle.Mutants, RAVehicle.Mutants
+		BuildDuration: 3750
+		BuildDurationModifier: 40
+		Description: Deploys into another Construction Yard.\n  Unarmed
+	Selectable:
+		Priority: 4
+		DecorationBounds: 36,36
+	Mobile:
+		Speed: 99
+		TurnSpeed: 12
+		Locomotor: lighttracked
+	Health:
+		HP: 150000
+	Repairable:
+		HpPerStep: 2182
+	Armor:
+		Type: None
+	RevealsShroud:
+		Range: 8c0
+	Transforms:
+		IntoActor: fact.mut
+		Offset: -1,-1
+		Facing: 108
+		TransformSounds: constru2.aud, hvydoor1.aud
+		NoTransformNotification: BuildingCannotPlaceAudio
+	MustBeDestroyed:
+		RequiredForShortGame: true
+	BaseBuilding:
+	SpawnActorOnDeath:
+		Actor: MCV.Husk
+		OwnerType: InternalName
+		EffectiveOwnerFromOwner: true
+	SelectionDecorations:
+	Inherits@EXT: ^ExternalConditions					##########
+	WithTextDecoration:
+		Text: MCV
+		ReferencePoint: Bottom, Left
+		UsePlayerColor: True
+		ValidStances: Ally, Enemy, Neutral
+	RenderSprites:
+		Image: ant
+        Scale: 2
+    Voiced:
+		VoiceSet: AntVoice
+	ProvidesPrerequisite@faction:
+		Prerequisite: mmmutants
+
+FROCK:
+	Inherits: ^Defense
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Selectable:
+		Bounds: 24,24
+	Valued:
+		Cost: 600
+	Tooltip:
+		Name: Blazing Rock
+	Buildable:
+		BuildPaletteOrder: 10
+		Queue: Defence.Mutants, RADefence.Mutants
+		BuildDuration: 360
+		BuildDurationModifier: 40
+		Description: Basic defensive structure.\n  Strong vs Infantry and Light Vehicles\n  Weak vs Heavy Vehicles and Aircraft
+	Building:
+	Health:
+		HP: 30000
+	RevealsShroud:
+		Range: 4c0
+	WithBuildingBib:
+		HasMinibib: True
+	Armament:
+		Weapon: FlamerMut
+		LocalOffset: 256,0,256
+	AttackTurreted:
+		RequiresCondition: !build-incomplete
+	BodyOrientation:
+		QuantizedFacings: 8
+	DetectCloaked:
+		Range: 3c0
+	WithMuzzleOverlay:
+	Turreted:
+		TurnSpeed: 255
+	Power:
+		Amount: -10
+    RenderSprites:
+        Image: rock4
+
+WORKERANT:
+	Inherits: ^Vehicle
+	Inherits@EXT: ^ExternalConditions
+	Buildable:
+		Queue: Infantry.Mutants, RAInfantry.Mutants
+		BuildPaletteOrder: 10
+		Description: Collects Ore and Gems for processing.\n  Unarmed
+	Valued:
+		Cost: 300
+	Tooltip:
+		Name: Worker Ant
+		GenericName: Harvester
+	Selectable:
+		Priority: 7
+		DecorationBounds: 14,14
+	SelectionDecorations:
+	Harvester:
+		Capacity: 5
+		BaleLoadDelay: 16	#14
+		Resources: Tiberium, BlueTiberium, RedTiberium, GoldTiberium, Ore, Gems, SCMinerals		##########
+		BaleUnloadDelay: 1
+		SearchFromProcRadius: 30
+		PipCount: 5
+		MaxUnloadQueue: 9
+		DeliveryBuildings: insecthill
+	Health:
+		HP: 30000	#60000
+	Armor:
+		Type: None
+	Mobile:
+		Speed: 99
+		TurnSpeed: 12
+		Locomotor: lighttracked
+	RevealsShroud:
+		Range: 4c0
+	WithHarvestAnimation:
+	WithDockingAnimation:
+	HarvesterHuskModifier:
+		FullnessThreshold: 50
+	Explodes:
+		Weapon: TiberiumExplosion
+	Voiced:
+		VoiceSet: AntVoice
+	RenderSprites:
+        Image: Ant
+		Scale: 0.5
+
+INSECTHILL:
+	Inherits: ^BaseBuilding
+	Selectable:
+		Bounds: 48,48
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -1024, -1024
+			BottomRight: 1024, 1024
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Insect Hill
+	Buildable:
+		Queue: Building.Mutants, RABuilding.Mutants
+		BuildPaletteOrder: 30
+		Prerequisites: tibtreemut
+		Description: Refines Tiberium into credits.\nTrains Insects and worker ants.
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+		LocalCenterOffset: 0,-256,0
+		BuildSounds: citybuild.aud
+	Health:
+		HP: 40000
+	RevealsShroud:
+		Range: 4c0
+	Refinery:
+		DockAngle: 64
+		DockOffset: 0,2
+    RallyPoint:							##########
+		Offset: 0,2
+    Exit@1:
+		SpawnOffset: -1024,1024,0		#-1323,1280,0
+		ExitCell: 0,2
+		Facing: 135
+    Production@NORMAL:
+		Produces: Infantry.Mutants
+		RequiresCondition: !classicproductionqueues
+	Production@CLASSICPRODUCTIONQUEUES:
+		Produces: RAInfantry.Mutants
+		RequiresCondition: classicproductionqueues
+	ProductionQueue:
+		Type: Infantry.Mutants
+		DisplayOrder: 2
+		Group: Infantry
+		ReadyAudio: UnitReady
+		BlockedAudio: NoBuild
+		LimitedAudio: BuildingInProgress
+		QueuedAudio: Training
+		OnHoldAudio: OnHold
+		CancelledAudio: Cancelled
+	ProductionBar@INFANTRYALLIES:
+		ProductionType: Infantry.Mutants
+		RequiresCondition: !classicproductionqueues
+	ProductionBar@RAINFANTRYALLIES:
+		ProductionType: RAInfantry.Mutants
+		RequiresCondition: classicproductionqueues
+	StoresResources:
+		PipCount: 10
+		Capacity: 5000
+	DrawLineToTarget:
+	ProvidesPrerequisite@buildingname:
+	ProvidesPrerequisite@2:
+		Prerequisite: MoneyIncome
+	Power:
+		Amount: -10
+    RenderSprites:
+        Image: anthill
+		Scale: 0.75
+	-SpawnActorsOnSell:
+	GivesBuildableArea:					##########
+		AreaTypes: building, cityi, citybot
+
+WANT:
+	Inherits: ^Infantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Warrior Ant
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry.Mutants, RAInfantry.Mutants
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 20
+		Prerequisites: insecthill
+		Description: Has Heavy Armor and deals lots of damage but slow.
+	Selectable:
+		Bounds: 24,24,0,-5
+		DecorationBounds: 30,30,0,-2
+	SelectionDecorations:
+	Health:
+		HP: 75000
+    Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 60
+		TurnSpeed: 12
+		Locomotor: lighttracked
+	-Crushable:
+	AutoTarget:
+		ScanRadius: 5
+	AttackFrontal:
+	WithInfantryBody:
+		DefaultAttackSequence: bite
+	Armament:
+		Weapon: MandibleHeavy
+    RenderSprites:
+        Image: Ant
+	Targetable:
+		TargetTypes: Ground, Infantry, Ant
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+	Voiced:
+		VoiceSet: AntVoice
+	HitShape:
+		Type: Circle
+			Radius: 469
+	Inherits@EXT: ^ExternalConditions					##########
+    
+FANT:
+	Inherits: ^Infantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Fire Ant
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry.Mutants, RAInfantry.Mutants
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 30
+		Prerequisites: insecthill
+		Description: This insect spews flame from its mouth!
+	Selectable:
+		Bounds: 24,24,0,-5
+		DecorationBounds: 30,30,0,-2
+	SelectionDecorations:
+	Health:
+		HP: 55000
+    Armor:
+		Type: Light
+	Mobile:
+		Speed: 99
+		TurnSpeed: 12
+		Locomotor: lighttracked
+	-Crushable:
+	AutoTarget:
+		ScanRadius: 5
+	AttackFrontal:
+	WithInfantryBody:
+		DefaultAttackSequence: bite
+	Armament:
+		Weapon: AntFireball
+    RenderSprites:
+        Image: Ant
+	Targetable:
+		TargetTypes: Ground, Infantry, Ant
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+	Voiced:
+		VoiceSet: AntVoice
+	HitShape:
+		Type: Circle
+			Radius: 469
+	Inherits@EXT: ^ExternalConditions					##########
+
+TESLAANT:
+	Inherits: ^Infantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 3300
+	Tooltip:
+		Name: Tesla Ant
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry.Mutants, RAInfantry.Mutants
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 900
+		Prerequisites: ~disabled
+		Description: This insect is a evolutionary insect!\nCombinging 3 fire ants in the evolution chamber\nevolves into this insect!\nThis insect can shock enemies to death!
+	Selectable:
+		Bounds: 24,24,0,-5
+		DecorationBounds: 30,30,0,-2
+	SelectionDecorations:
+	Health:
+		HP: 55000
+    Armor:
+		Type: Light
+	Mobile:
+		Speed: 99
+		TurnSpeed: 12
+		Locomotor: lighttracked
+    RenderSprites:
+        Image: Ant
+        Palette: custom1
+	-Crushable:
+	AutoTarget:
+		ScanRadius: 5
+	AttackFrontal:
+	WithInfantryBody:
+		DefaultAttackSequence: bite
+	Armament:
+		Weapon: TTankZap
+	Targetable:
+		TargetTypes: Ground, Infantry, Ant
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+	Voiced:
+		VoiceSet: AntVoice
+	HitShape:
+		Type: Circle
+			Radius: 469
+	Inherits@EXT: ^ExternalConditions					##########
+
+TIBANT:
+	Inherits: ^Infantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 2750
+	Tooltip:
+		Name: Tiberium Ant
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry.Mutants, RAInfantry.Mutants
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 910
+		Prerequisites: ~disabled
+		Description: This insect is a evolutionary insect!\nCombinging a fire ant and a warrior ant in the evolution\nchamber evolves into this insect!\nThis insect can attack both air and land with tiberium!
+	Selectable:
+		Bounds: 24,24,0,-5
+		DecorationBounds: 30,30,0,-2
+	SelectionDecorations:
+	Health:
+		HP: 60000
+    Armor:
+		Type: Light
+	Mobile:
+		Speed: 99
+		TurnSpeed: 12
+		Locomotor: lighttracked
+    RenderSprites:
+        Image: Ant
+        Palette: dropship
+	-Crushable:
+	AutoTarget:
+		ScanRadius: 5
+	AttackFrontal:
+	WithInfantryBody:
+		DefaultAttackSequence: bite
+	Armament:
+		Weapon: MutantShard
+	Targetable:
+		TargetTypes: Ground, Infantry, Ant, Air
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+	Voiced:
+		VoiceSet: AntVoice
+	HitShape:
+		Type: Circle
+			Radius: 469
+	Inherits@EXT: ^ExternalConditions					##########
+
+TIBANT2:
+	Inherits: ^Infantry
+	Inherits@AUTOTARGET: ^AutoTargetGroundAssaultMove
+	Valued:
+		Cost: 5000
+	Tooltip:
+		Name: Blue Tiberium Ant
+	UpdatesPlayerStatistics:
+		AddToArmyValue: true
+	Buildable:
+		Queue: Infantry.Mutants, RAInfantry.Mutants
+		BuildAtProductionType: Soldier
+		BuildPaletteOrder: 920
+		Prerequisites: ~disabled
+		Description: This insect is a evolutionary insect!\nCombinging 3 tiberium ants in the evolution chamber\nevolves into this insect!\nThis insect is similar to the tiberium ant but stronger and faster!
+	Selectable:
+		Bounds: 24,24,0,-5
+		DecorationBounds: 30,30,0,-2
+	SelectionDecorations:
+	Health:
+		HP: 80000
+    Armor:
+		Type: Heavy
+	Mobile:
+		Speed: 105
+		TurnSpeed: 12
+		Locomotor: lighttracked
+    RenderSprites:
+        Image: Ant
+        Palette: rainbow
+	-Crushable:
+	AutoTarget:
+		ScanRadius: 5
+	AttackFrontal:
+	WithInfantryBody:
+		DefaultAttackSequence: bite
+	Armament:
+		Weapon: MutantShardBlue
+	Targetable:
+		TargetTypes: Ground, Infantry, Ant, Air
+	WithDeathAnimation:
+		UseDeathTypeSuffix: false
+	Voiced:
+		VoiceSet: AntVoice
+	HitShape:
+		Type: Circle
+			Radius: 469
+	Inherits@EXT: ^ExternalConditions					##########
+    
+CDEN:
+	Inherits: ^BaseBuilding
+	Selectable:
+		Bounds: 24,24
+	Buildable:
+		Queue: Defence.Mutants, RADefence.Mutants
+		BuildPaletteOrder: 20
+		Prerequisites: insecthill
+		Description: Stores excess refined\nOre and Gems.
+	Valued:
+		Cost: 150
+	Tooltip:
+		Name: Collectors Den
+	-GivesBuildableArea:
+	-MustBeDestroyed:
+	Health:
+		HP: 30000
+	Armor:
+		Type: None
+	RevealsShroud:
+		Range: 4c0
+	StoresResources:
+		PipCount: 8
+		Capacity: 8000
+	-SpawnActorsOnSell:
+	Explodes:
+		Weapon: BuildingExplode
+		EmptyWeapon: BuildingExplode
+
+LOOKOUTMUT:
+	Inherits: ^BaseBuilding
+    Inherits@shape: ^2x1Shape
+	Selectable:
+		Bounds: 48,24
+	Buildable:
+		Queue: Building.Mutants, RABuilding.Mutants
+		BuildPaletteOrder: 40
+		Prerequisites: insecthill, tibtreemut
+        BuildDuration: 1200
+		Description: Provides Radar and Higher tech.
+	Valued:
+		Cost: 1500
+	Tooltip:
+		Name: Savenger's lookout
+	Health:
+		HP: 50000
+	Armor:
+		Type: Light
+	RevealsShroud:
+		Range: 7c0
+		RequiresCondition: !lowpower
+		RevealGeneratedShroud: False
+	RevealsShroud@Offline:
+		Range: 5c0
+		RequiresCondition: lowpower
+	RevealsShroud@GAPGEN:
+		Range: 6c0
+		RequiresCondition: !lowpower
+	ProvidesRadar:
+		RequiresCondition: !jammed && !lowpower
+	-SpawnActorsOnSell:
+    RenderSprites:
+        Image: rock3
+
+AANEST:
+	Inherits: ^Defense
+	Inherits@AUTOTARGET: ^AutoTargetGround
+	Selectable:
+		Bounds: 24,24
+	Valued:
+		Cost: 800
+	Tooltip:
+		Name: Anti-Air nest
+	Buildable:
+		BuildPaletteOrder: 30
+		Queue: Defence.Mutants, RADefence.Mutants
+		BuildDuration: 600
+		BuildDurationModifier: 40
+		Description: Basic anti-air structure.\nCan't really detect cloaked units.\n  Strong vs Aircraft\n  Weak vs Ground
+	Building:
+	Health:
+		HP: 30000
+	RevealsShroud:
+		Range: 4c0
+    DetectCloaked:
+		Range: 1c0
+	Armament:
+		Weapon: AANestGunMut
+		LocalOffset: 256,0,256
+	AttackTurreted:
+		RequiresCondition: !build-incomplete
+	BodyOrientation:
+		QuantizedFacings: 8
+	WithMuzzleOverlay:
+	Turreted:
+		TurnSpeed: 255
+	Power:
+		Amount: -10
+    RenderSprites:
+        Image: v34.husk
+
+EVO:
+	Inherits: ^BaseBuilding
+	Selectable:
+		Bounds: 48,48
+	HitShape:
+		UseTargetableCellsOffsets: true
+		Type: Rectangle
+			TopLeft: -1024, -1024
+			BottomRight: 1024, 1024
+	Valued:
+		Cost: 1000
+	Tooltip:
+		Name: Evo Chamber (TEST)
+    Cargo:
+        MaxWeight: 4
+        PipCount: 4
+	Buildable:
+		Queue: Building.Mutants, RABuilding.Mutants
+		BuildPaletteOrder: 50
+		Prerequisites: tibtreemut, insecthill
+		Description: Refines Tiberium into credits.\nTrains Insects and worker ants.
+	Building:
+		Footprint: xx xx
+		Dimensions: 2,2
+		LocalCenterOffset: 0,-256,0
+		BuildSounds: citybuild.aud
+	Health:
+		HP: 40000
+	RevealsShroud:
+		Range: 4c0
+	Refinery:
+		DockAngle: 64
+		DockOffset: 0,2
+    RallyPoint:							##########
+		Offset: 0,2
+    Exit@1:
+		SpawnOffset: -1024,1024,0		#-1323,1280,0
+		ExitCell: 0,2
+		Facing: 135
+	Power:
+		Amount: -10
+    RenderSprites:
+        Image: rock6
+	-SpawnActorsOnSell:
+	GivesBuildableArea:					##########
+		AreaTypes: building, cityi, citybot
